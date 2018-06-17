@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+{% block body %}
+<div class="row pt-3 pb-3">
+	<div class="col-8">
+		<h2>{{ car.name }}</h2>
+		<h6 class="text-info">{{ category }}</h6>
+	</div>
+	<div class="col-4 text-right">
+		<h6 class="mt-3 text-secondary">Offer #{{ car.id }}</h6>
+	</div>
+</div>
+<div class="row pt-3">
+	<div class="col-8">
+		<div class="container border rounded p-4">
+			<img class="img-fluid rounded" src="{{ url_for('static', filename=car.photo) }}">
+		</div>
+		<div class="container border rounded p-4 mt-4">
+			<h5 class="mb-3">Description</h5>
+			<p>{{ car.description }}</p>
+		</div>
+	</div>
+	<div class="col-4 pl-5">
+		<a class="btn btn-primary btn-block mb-4" href="#" role="button">Contact owner</a>
+
+		<h6 class="mt-5 text-secondary">Asked price</h6>
+		<h2>{{ "$%.2f"|format(car.price) }}</h2>
+		<hr>
+		<h6 class="mt-2 text-secondary">Miles</h6>
+		<h5>{{ car.miles }}</h5>
+		<hr>
+		<h6 class="mt-2 text-secondary">Built year</h6>
+		<h5>{{ car.year }}</h5>
+		<hr>
+		<div class="row mt-2">
+			<div class="col-6">
+				<h6 class="text-secondary">Fuel</h6>
+				<h5>{{ car.fuel }}</h5>
+			</div>
+			<div class="col-6">
+				<h6 class="text-secondary">Consumption</h6>
+				<h5>{{ car.consumption }}L</h5>
+			</div>
+		</div>
+		<hr>
+		<h6 class="mt-2 text-secondary">Color</h6>
+		<h5>{{ car.color }}</h5>
+		<hr>
+	</div>
+</div>
+{% endblock %}

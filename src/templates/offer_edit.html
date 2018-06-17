@@ -1,0 +1,77 @@
+{% extends "main.html" %}
+{% block body %}
+<h2 class="mt-5 mb-3">Edit your listing</h2>
+
+<div class="row pl-3 pt-3">
+	<div class="col-8 border rounded p-4">
+		<form method="POST" enctype="multipart/form-data">
+		<div class="form-group">
+			<label for="exampleInputEmail1">Title of your offer</label>
+			<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="item_name" value="{{ car.name }}">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputEmail1">Description</label>
+			<textarea class="form-control" id="exampleFormControlTextarea1" rows="5" name="item_description">{{ car.description }}</textarea>
+		</div>
+		<div class="form-group">
+			<label for="exampleInputEmail1">Price</label>
+			<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="item_price" value="{{ car.price }}">
+		</div>
+		<div class="row">
+			<div class="form-group col">
+				<label for="inputState">Category</label>
+				<select id="inputState" class="form-control" name="item_category" value="{{ car.category }}">
+					<option selected>Choose...</option>
+					<option>...</option>
+				</select>
+			</div>
+			<div class="form-group col">
+				<label for="exampleInputEmail1">Color</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="item_color"  value="{{ car.color }}">
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col">
+				<label for="exampleInputEmail1">Year</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="item_year" value="{{ car.year }}">
+			</div>
+			<div class="form-group col">
+				<label for="exampleInputEmail1">Miles</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="item_miles" value="{{ car.miles }}">
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group col">
+				<label for="exampleInputEmail1">Fuel</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="item_fuel" value="{{ car.fuel }}">
+			</div>
+			<div class="form-group col">
+				<label for="exampleInputEmail1">Consumption</label>
+				<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="item_consumption" value="{{ car.consumption }}">
+			</div>
+		</div>
+		<div class="row mt-3 mb-3">
+			<div class="col-4">
+				<img class="img-fluid rounded" src="{{ url_for('static', filename=car.photo) }}">
+			</div>
+			<div class="form-group col-8">
+			    <label for="exampleFormControlFile1">Photo</label>
+			    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="item_photo">
+			</div>
+		</div>
+		  <button type="submit" class="btn btn-primary mt-3">Change offer</button>
+		</form>
+	</div>
+	<div class="col-4 pl-5">
+		<h5>It's totally free!</h5>
+		<ul class="list-group mt-4">
+			<li class="list-group-item">&#x2714;&nbsp;&nbsp;Create listings</li>
+			<li class="list-group-item">&#x2714;&nbsp;&nbsp;Manage your listings</li>
+			<li class="list-group-item">&#x2714;&nbsp;&nbsp;Completely free</li>
+		</ul>
+		<p class="mt-5">
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+		</p>
+	</div>
+</div>
+{% endblock %}

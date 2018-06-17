@@ -1,0 +1,44 @@
+{% extends "main.html" %}
+{% block body %}
+<h3 class="mt-5 mb-3">My Offers</h3>
+<div class="row pt-4">
+
+	<div class="col-8">
+		{% for car in cars %}
+		<div class="row border rounded p-4 mb-3">
+			<div class="col-4"><img class="img-thumbnail" src="{{ url_for('static', filename=car.photo) }}"></div>
+			<div class="col-8">
+				<div class="container"><h5>{{ car.name }}</h5></div>
+				<div class="container">{{ "$%.2f"|format(car.price) }}</div>
+				<div class="container mt-3">
+					<div class="row">
+						<div class="col-4">
+							<a class="btn btn-primary btn-block" href="/cars/view/{{ car.id }}/" role="button">View offer</a>
+						</div>
+						<div class="col-4">
+							<a class="btn btn-secondary btn-block" href="/cars/edit/{{ car.id }}/" role="button">Edit offer</a>
+						</div>
+						<div class="col-4">
+							<a class="btn btn-danger btn-block" href="/cars/delete/{{ car.id }}/" role="button">Delete</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% else %}
+		<div class="card text-center pt-5 pb-5">
+			<div class="card-body">
+				<h5 class="card-title">No offers so far</h5>
+				<p class="card-text">Why don't you add your own offer?</p>
+				<a href="/cars/create" class="btn btn-primary">Add your offer</a>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+
+	<div class="col-4">
+		<h4>What's here?</h4>
+	</div>
+
+</div>
+{% endblock %}
