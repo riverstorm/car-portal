@@ -1,41 +1,30 @@
 # Car Portal
 
-<b>This python script is used to generate a website which shows a variable amount of popular movies.</b>
+<b>This flask application shows a simple website to list cars for sale.</b>
 <br>The amount of movies is set to 8 by default. 
 <br><br>
-Every movie is retrieved by using the themoviedb.org API and includes the title, story, poster image, 
-a trailer url (youtube.com) and a link to buy or view the whole movie if available (amazon.com).
-
+It offers features to create, edit and delete offers, secured by Google Auth.
 ## An Udacity Project
 The project is part of my Udacity course and uses some provided ressources.
 <br><br>
 <b>The requirements are exceeded by at least the following features or changes:</b>
 <br>
 <ul>
-  <li>Movies are retrieved by an API (themoviedb.org)</li>
-  <li>Movies show an option to buy or view on demand (amazon.com)</li>
-  <li>A new layout was created which is also fully responsive</li>
-  <li>Bootstrap and jQuery are upgraded to the latest versions</li>
-  <li>All external ressources are now served over HTTP<b>S</b></li>
+  <li>Image handling</li>
+  <li>CSRF protection</li>
 </ul>
 
 ## Installation
 ### Requirements
 <ul>
-  <li>A Windows, Mac or Linux machine with Python 2 or higher</li>
-  <li>The Python library <i>requests</i> (see http://www.python-requests.org/en/latest/ or simply run "pip install -r requirements.txt" or "pip install requests")</li>
-  <li>An API key from themoviedb.org (create an account and go to https://www.themoviedb.org/settings/api)</li>
+  <li>A Windows, Mac or Linux machine with Python 3</li>
+  <li>The Python library <i>Flask-SQLAlchemy</i> and <i>Flask-Migrate</i>. Simply run "pip install -r requirements.txt" to install the libraries.</li>
+  <li>A client_secrets.json file from your Google Auth account</li>
 </ul>
 
 ### Instruction
 <ol>
-  <li>Open the media.py file in an editor and enter your private themoviedb.org API in line 11, then save the file</li>
-  <li>In a terminal / console of your choice, run the entertainment_center.py file</li>
-  <li>Your webbrowser should now automatically open and show the fresh_tomatoes.html file with its movies</li>
-  <li><i>Optional: Edit the number of returned movies in the entertainment_center.py file to a maximum of 20 movies.</i></li>
-</ol
-<br><br>
-<i>
-Note:
-Due to the Udacity requirement of beeing usable with Python 2, some Python 3 standards are not included unfortunately.
-</i>
+  <li>In a terminal / console of your choice, run the app.py file as Flask application</li>
+  <li>The website should now be reachable at <i>localhost:5000</i></li>
+  <li>To use the admin functionality for adding new categories, open /admin in your website, copy your personal Google ID and include it in the app.py file.</li>
+</ol>
