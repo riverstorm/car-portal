@@ -23,7 +23,7 @@ The project is part of my Udacity course and uses some provided ressources.
 
 ### Instruction
 <ol>
-  <li>In a terminal / console of your choice, run the app.py file as Flask application</li>
+  <li>In a terminal / console of your choice, go to the directory that keeps the app.py file and execute the command <i>flask run</i></li>
   <li>The website should now be reachable at <i>localhost:5000</i></li>
   <li>To use the admin functionality for adding new categories, open /admin in your website, copy your personal Google ID and include it in the app.py file.</li>
 </ol>
