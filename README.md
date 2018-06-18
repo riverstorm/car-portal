@@ -1,7 +1,6 @@
 # Car Portal
 
 <b>This flask application shows a simple website to list cars for sale.</b>
-<br>The amount of movies is set to 8 by default. 
 <br><br>
 It offers features to create, edit and delete offers, secured by Google Auth.
 ## An Udacity Project
