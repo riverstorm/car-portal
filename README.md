@@ -25,7 +25,7 @@ The project is part of my Udacity course and uses some provided resources.
 <ol>
   <li>In a terminal / console of your choice, switch to the directory that contains the app.py file.</li>
   <li>Execute the commands <i>flask db init</i>, <i>flask db migrate</i> and finally <i>flask db upgrade</i> to set up the database.</li>
-  <li>Start the app by executing the command <i>flask run --host=0.0.0.0</i>. The app should now be reachable at <i>localhost:5000</i> in your browser.</li>
+  <li>Start the app by executing the command <i>flask run --host=0.0.0.0</i> . The app should now be reachable at <i>localhost:5000</i> in your browser.</li>
   <li>You should start by adding categories. Therefor give yourself admin permissions by opening /admin in your website, copy your personal Google ID and include it in the app.py file. If you are not in debug mode, restart your Flask application.</li>
   <li>Offers can be added by all authorized users and viewed by not authorized users.</li>
   <li>Go to "my offers" to edit or delete your own offers</li>
