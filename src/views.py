@@ -54,7 +54,7 @@ def offer_create():
     """
     Handles the creation of new Items. Items are shown
     as car offers for the public.
-    
+
     Methods:
         GET: If a GET request is made, the offer_create.html template with a
         form is rendered.
@@ -138,7 +138,7 @@ def category_create():
 
     Notes:
         Requires admin permission.
-    
+
     Methods:
         GET: If a GET request is made, the category_create.html template with a
         form is rendered.
@@ -168,7 +168,7 @@ def category_create():
 def offer_edit(car_id):
     """
     Handles the editing of existing Items.
-    
+
     Methods:
         GET: If a GET request is made, the offer_edit.html template with a form
         is rendered. The form includes current values.
@@ -220,7 +220,7 @@ def offer_delete(car_id):
     Handles the deletion of existing Items. Only the owner of the Item is able
     to delete it. The owner is verified by a comparison with the login sessions
     user id.
-    
+
     Methods:
         GET: The GET request shows a form as a simple button to retrieve
         verification of Item deletion.
@@ -266,7 +266,7 @@ def login():
 def gconnect():
     """
     Handles the login of a user by connecting with Google Plus.
-    
+
     Methods:
         POST: Receives the request from the 'login' functions form
 
@@ -352,7 +352,7 @@ def logout():
     access_token = login_session.get('access_token')
     if access_token is None:
         print('Access Token is None')
-        response = make_response(json.dumps("Current user not connected."), 
+        response = make_response(json.dumps("Current user not connected."),
                                  401)
         response.headers['Content-Type'] = 'application/json'
         return response
