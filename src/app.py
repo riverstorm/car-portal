@@ -1,8 +1,16 @@
+"""
+This flask application represents an online car market with CRUD operations and
+Google Plus authentication.
+It is part of the Udacity Full Stack Developer Nanodegree.
+
+Github repository: https://github.com/riverstorm/car-portal
+"""
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import json
 from os.path import join, dirname, realpath
+
 
 # Flask
 app = Flask(__name__)
