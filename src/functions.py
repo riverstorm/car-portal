@@ -1,3 +1,8 @@
+"""
+The functions.py file includes several functions that are used within the
+application.
+Functions may be available as a wrapper to be applied at view functions.
+"""
 import flask
 from flask import request, make_response, redirect, flash, json
 from functools import wraps
