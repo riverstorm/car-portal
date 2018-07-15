@@ -1,13 +1,23 @@
+"""
+The models.py file includes all models of the applications and are stored with
+flasks ORM functionality in a database.
+"""
 from app import app, db
 from datetime import datetime
 
 
 class Category(db.Model):
+    """
+    Categories to organize Items
+    """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
 
 
 class Item(db.Model):
+    """
+    An Item represents a offer in the car market
+    """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(500), nullable=False)
@@ -24,7 +34,7 @@ class Item(db.Model):
 
     @property
     def serialize(self):
-    # Return object data in easily serializable format
+        # Return object data in easily serializable format
         return {
             'id': self.id,
             'name': self.name,
