@@ -35,9 +35,9 @@ def admin(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         if login_session['gplus_id'] != ADMIN_ID:
-            response = make_response(
-                json.dumps('Restricted Area. Your ID: '
-                           + login_session['gplus_id']), 401)
+            response = make_response(json.dumps(
+                                    'Restricted Area. Your ID: ' +
+                                    login_session['gplus_id']), 401)
             response.headers['Content-Type'] = 'application/json'
             return response
         else:
