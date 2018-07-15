@@ -352,7 +352,8 @@ def logout():
     access_token = login_session.get('access_token')
     if access_token is None:
         print('Access Token is None')
-        response = make_response(json.dumps("Current user not connected."), 401)
+        response = make_response(json.dumps("Current user not connected."), 
+                                 401)
         response.headers['Content-Type'] = 'application/json'
         return response
     print('In gdisconnect access token is %s', access_token)
