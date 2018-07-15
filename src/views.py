@@ -1,7 +1,16 @@
+"""
+The views.py file includes all GET and POST operations of the application.
+"""
 from app import app, db
 from app import CLIENT_ID
 from models import Category, Item
-import flask, os, random, string, httplib2, json, requests
+import flask
+import os
+import random
+import string
+import httplib2
+import json
+import requests
 from flask import Flask, render_template, request, flash, make_response, \
     redirect, jsonify
 from flask import session as login_session
@@ -20,6 +29,7 @@ def offer_overview():
     return render_template('offer_overview.html', cars=items,
                            categories=categories)
 
+
 # Displays an overview of all available offers
 @app.route("/<category>")
 def offer_overview_category(category):
@@ -27,6 +37,7 @@ def offer_overview_category(category):
     categories = Category.query
     return render_template('offer_overview.html', cars=items,
                            categories=categories)
+
 
 # Displays an overview of all available offers as JSON
 @app.route("/json")
@@ -40,6 +51,21 @@ def offer_overview_json():
 @login_required
 @validate_csrf_post
 def offer_create():
+    """
+    Handles the creation of new Items. Items are shown
+    as car offers for the public.
+    
+    Methods:
+        GET: If a GET request is made, the offer_create.html template with a
+        form is rendered.
+        POST: A POST request usually happens on form submit and finally creates
+        a new Item object.
+
+    Returns:
+        GET method: offer_create.html with a form to execute a POST request.
+        POST method: Redirects to homepage with a message in case of success.
+
+    """
     if flask.request.method == 'POST':
         name = request.form['item_name']
         description = request.form['item_description']
@@ -79,7 +105,7 @@ def offer(car_id):
     return render_template('item.html', car=result)
 
 
-# # Displays the details of a single offer as JSON
+# Displays the details of a single offer as JSON
 @app.route("/cars/view/<int:car_id>/json")
 def offer_json(car_id):
     result = Item.query.filter_by(id=car_id).first()
@@ -107,6 +133,23 @@ def category_overview():
 @admin
 @validate_csrf_post
 def category_create():
+    """
+    Handles the creation of new Categories.
+
+    Notes:
+        Requires admin permission.
+    
+    Methods:
+        GET: If a GET request is made, the category_create.html template with a
+        form is rendered.
+        POST: A POST request usually happens on form submit and creates a new
+        Category object.
+
+    Returns:
+        GET method: category_create.html with a form.
+        POST method: category_create.html with a form and a success message.
+
+    """
     if flask.request.method == 'POST':
         name = request.form['category_name']
         category = Category(name=name)
@@ -117,13 +160,30 @@ def category_create():
         return render_template('category_create.html')
 
     else:
-        flash('An error occurred', 'error')
         return render_template('category_create.html')
 
 
 # Displays or executes a form to edit an offer
 @app.route("/cars/edit/<int:car_id>/", methods=['GET', 'POST'])
 def offer_edit(car_id):
+    """
+    Handles the editing of existing Items.
+    
+    Methods:
+        GET: If a GET request is made, the offer_edit.html template with a form
+        is rendered. The form includes current values.
+        POST: A POST request that happens on form submit updates the existing
+        items with the form values.
+
+    Parameters:
+        car_id: The primary and unique id of the Item to be edited
+
+    Returns:
+        GET method: offer_edit.html with a prefilled form to execute a POST
+        request.
+        POST method: Redirects to homepage with a message in case of success.
+
+    """
     if flask.request.method == 'POST':
         result = Item.query.filter_by(id=car_id).first()
         result.name = request.form['item_name']
@@ -156,6 +216,26 @@ def offer_edit(car_id):
 @login_required
 @validate_csrf_post
 def offer_delete(car_id):
+    """
+    Handles the deletion of existing Items. Only the owner of the Item is able
+    to delete it. The owner is verified by a comparison with the login sessions
+    user id.
+    
+    Methods:
+        GET: The GET request shows a form as a simple button to retrieve
+        verification of Item deletion.
+        POST: A POST request deleted the requested Item.
+
+    Parameters:
+        car_id: The primary and unique id of the Item to be deleted.
+
+    Returns:
+        GET method: offer_delete.html with form button or a redirect to the
+        homepage with an error message if the Items owner does not match.
+        POST method: Redirects to homepage with a success message or with an
+        error message if the Items owner does not match.
+
+    """
     item = Item.query.filter_by(id=car_id).first()
     if login_session['gplus_id'] == item.user:
         if flask.request.method == 'POST':
@@ -184,6 +264,18 @@ def login():
 @app.route('/gconnect', methods=['POST'])
 @validate_csrf_get
 def gconnect():
+    """
+    Handles the login of a user by connecting with Google Plus.
+    
+    Methods:
+        POST: Receives the request from the 'login' functions form
+
+    Returns:
+        Returns 'success' in case the login was successful.
+        The user is redirected to the homepage by using Javascript and receives
+        a flash success message.
+
+    """
     try:
         # Upgrade the authorization code into a credentials object
         oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
@@ -223,6 +315,7 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
+    # Check if the user is already connected.
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
@@ -231,23 +324,23 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    # Store the access token in the session for later use.
+    # Store the access token and gplus id in sessions.
     login_session['access_token'] = credentials.access_token
     login_session['gplus_id'] = gplus_id
 
-    # Get user info
+    # Retrieve user information.
     userinfo_url = 'https://www.googleapis.com/oauth2/v1/userinfo'
     params = {'access_token': credentials.access_token, 'alt': 'json'}
     answer = requests.get(userinfo_url, params=params)
 
     data = answer.json()
 
+    # Store user information in sessions.
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
     output = 'success'
-
     flash('You are now logged in as %s' % login_session['username'], 'success')
 
     return output
