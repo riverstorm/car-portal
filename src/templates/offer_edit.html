@@ -5,6 +5,7 @@
 <div class="row pl-3 pt-3">
 	<div class="col-8 border rounded p-4">
 		<form method="POST" enctype="multipart/form-data">
+		<input type="hidden" name="csrf_token" value="{{ session['state'] }}">
 		<div class="form-group">
 			<label for="exampleInputEmail1">Title of your offer</label>
 			<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="item_name" value="{{ car.name }}">
