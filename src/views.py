@@ -164,6 +164,8 @@ def category_create():
 
 
 # Displays or executes a form to edit an offer
+@login_required
+@validate_csrf_post
 @app.route("/cars/edit/<int:car_id>/", methods=['GET', 'POST'])
 def offer_edit(car_id):
     """
@@ -184,31 +186,36 @@ def offer_edit(car_id):
         POST method: Redirects to homepage with a message in case of success.
 
     """
-    if flask.request.method == 'POST':
-        result = Item.query.filter_by(id=car_id).first()
-        result.name = request.form['item_name']
-        result.description = request.form['item_description']
-        result.category = request.form['item_category']
-        result.price = request.form['item_price']
-        result.year = request.form['item_year']
-        result.fuel = request.form['item_fuel']
-        result.consumption = request.form['item_consumption']
-        result.color = request.form['item_color']
-        result.miles = request.form['item_miles']
-        result.user = login_session['gplus_id']
-        if request.files:
-            photo = request.files['item_photo']
-            filename = secure_filename(photo.filename)
-            photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            result.photo = filename
+    item = Item.query.filter_by(id=car_id).first()
+    if login_session['gplus_id'] == item.user:
+        if flask.request.method == 'POST':
+            result = Item.query.filter_by(id=car_id).first()
+            result.name = request.form['item_name']
+            result.description = request.form['item_description']
+            result.category = request.form['item_category']
+            result.price = request.form['item_price']
+            result.year = request.form['item_year']
+            result.fuel = request.form['item_fuel']
+            result.consumption = request.form['item_consumption']
+            result.color = request.form['item_color']
+            result.miles = request.form['item_miles']
+            result.user = login_session['gplus_id']
+            if request.files:
+                photo = request.files['item_photo']
+                filename = secure_filename(photo.filename)
+                photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                result.photo = filename
 
-        db.session.commit()
+            db.session.commit()
 
-        flash('Edited your offer successfully', 'success')
-        return redirect('/')
+            flash('Edited your offer successfully', 'success')
+            return redirect('/')
+        else:
+            result = Item.query.filter_by(id=car_id).first()
+            return render_template('offer_edit.html', car=result)
     else:
-        result = Item.query.filter_by(id=car_id).first()
-        return render_template('offer_edit.html', car=result)
+        flash('This is not your offer', 'error')
+        return redirect('/')
 
 
 # Displays or executes a form to delete an offer
@@ -241,6 +248,7 @@ def offer_delete(car_id):
         if flask.request.method == 'POST':
             db.session.delete(item)
             db.session.commit()
+            os.remove(os.path.join(app.config['UPLOAD_FOLDER'], item.photo))
             flash('Item ' + str(item.id) + ' successfully deleted', 'success')
             return redirect('/')
         else:
